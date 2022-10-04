@@ -35,14 +35,14 @@ defmodule Api.MixProject do
     [
       {:phoenix, "~> 1.6.13"},
       {:phoenix_ecto, "~> 4.4"},
-      {:ecto_sql, "~> 3.6"},
+      {:ecto_sql, "~> 3.9"},
       {:postgrex, ">= 0.0.0"},
-      {:phoenix_live_dashboard, "~> 0.6"},
-      {:swoosh, "~> 1.3"},
+      {:phoenix_live_dashboard, "~> 0.7"},
+      {:swoosh, "~> 1.8"},
       {:telemetry_metrics, "~> 0.6"},
       {:telemetry_poller, "~> 1.0"},
-      {:gettext, "~> 0.18"},
-      {:jason, "~> 1.2"},
+      {:gettext, "~> 0.20"},
+      {:jason, "~> 1.4"},
       {:plug_cowboy, "~> 2.5"},
       {:credo, "~> 1.6", only: [:dev, :test], runtime: false}
     ]
