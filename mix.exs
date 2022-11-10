@@ -48,7 +48,7 @@ defmodule Api.MixProject do
       {:tzdata, "~> 1.1"},
       {:ex_machina, "~> 2.7", only: :test},
       {:faker, "~> 0.17", only: :test},
-      {:argon2_elixir, "~> 3.0"},
+      {:argon2_elixir, "~> 3.0"}
     ]
   end
 
