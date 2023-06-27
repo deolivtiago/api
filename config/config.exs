@@ -10,6 +10,12 @@ import Config
 config :api,
   ecto_repos: [Api.Repo]
 
+# Configures the repo
+config :api, Api.Repo,
+  migration_primary_key: [type: :binary_id],
+  migration_foreign_key: [type: :binary_id],
+  migration_timestamps: [type: :timestamptz]
+
 # Configures the endpoint
 config :api, ApiWeb.Endpoint,
   url: [host: "localhost"],
@@ -19,6 +25,9 @@ config :api, ApiWeb.Endpoint,
   ],
   pubsub_server: Api.PubSub,
   live_view: [signing_salt: "1QVdLCX0"]
+
+# Configures the tzdata
+config :elixir, :time_zone_database, Tzdata.TimeZoneDatabase
 
 # Configures the mailer
 #
