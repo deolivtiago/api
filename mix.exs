@@ -8,6 +8,7 @@ defmodule Api.MixProject do
       elixir: "~> 1.14",
       elixirc_paths: elixirc_paths(Mix.env()),
       start_permanent: Mix.env() == :prod,
+      preferred_cli_env: [ci: :test, "test.reset": :test],
       aliases: aliases(),
       deps: deps()
     ]
@@ -58,7 +59,15 @@ defmodule Api.MixProject do
       setup: ["deps.get", "ecto.setup"],
       "ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"]
+      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
+      "test.reset": ["ecto.drop", "test"],
+      ci: [
+        "deps.unlock --check-unused",
+        "compile --warnings-as-errors",
+        "format --check-formatted",
+        "credo --strict",
+        "test"
+      ]
     ]
   end
 end
