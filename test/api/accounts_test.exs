@@ -3,9 +3,9 @@ defmodule Api.AccountsTest do
 
   import Api.Factories.UserFactory
 
-  alias Argon2
   alias Api.Accounts
   alias Api.Accounts.User
+  alias Argon2
   alias Ecto.Changeset
 
   setup do
