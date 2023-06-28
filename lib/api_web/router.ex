@@ -5,8 +5,10 @@ defmodule ApiWeb.Router do
     plug :accepts, ["json"]
   end
 
-  scope "/api", ApiWeb do
+  scope "/", ApiWeb do
     pipe_through :api
+
+    resources "/users", UserController, except: [:new, :edit]
   end
 
   # Enable Swoosh mailbox preview in development
