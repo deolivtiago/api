@@ -15,7 +15,7 @@ defmodule ApiWeb.UserControllerTest do
     test "with a list of users when there are users", %{conn: conn, user: user} do
       %{id: id, email: email, name: name} = user
 
-      conn = get(conn, ~p"/users")
+      conn = get(conn, ~p"/users") |> doc()
 
       assert %{"data" => [user]} = json_response(conn, 200)
 
@@ -31,7 +31,7 @@ defmodule ApiWeb.UserControllerTest do
     test "when the user parameters are valid", %{conn: conn} do
       user_params = params_for(:user)
 
-      conn = post(conn, ~p"/users", user: user_params)
+      conn = post(conn, ~p"/users", user: user_params) |> doc()
 
       assert %{"data" => user_data} = json_response(conn, 201)
 
@@ -46,7 +46,7 @@ defmodule ApiWeb.UserControllerTest do
     test "when the user parameters are invalid", %{conn: conn} do
       user_params = %{email: "???", name: nil, password: "?"}
 
-      conn = post(conn, ~p"/users", user: user_params)
+      conn = post(conn, ~p"/users", user: user_params) |> doc()
 
       assert %{"errors" => errors} = json_response(conn, 422)
 
@@ -60,7 +60,7 @@ defmodule ApiWeb.UserControllerTest do
     setup [:insert_user]
 
     test "when the user id is found", %{conn: conn, user: user} do
-      conn = get(conn, ~p"/users/#{user}")
+      conn = get(conn, ~p"/users/#{user}") |> doc()
 
       assert %{"data" => user_data} = json_response(conn, 200)
 
@@ -74,7 +74,7 @@ defmodule ApiWeb.UserControllerTest do
     setup [:insert_user]
 
     test "when the user id is not found", %{conn: conn} do
-      conn = get(conn, ~p"/users/#{@id_not_found}")
+      conn = get(conn, ~p"/users/#{@id_not_found}") |> doc()
 
       assert %{"errors" => errors} = json_response(conn, 422)
 
@@ -88,7 +88,7 @@ defmodule ApiWeb.UserControllerTest do
     test "when the user parameters are valid", %{conn: conn, user: user} do
       user_params = params_for(:user)
 
-      conn = put(conn, ~p"/users/#{user}", user: user_params)
+      conn = put(conn, ~p"/users/#{user}", user: user_params) |> doc()
 
       assert %{"data" => user_data} = json_response(conn, 200)
 
@@ -104,7 +104,7 @@ defmodule ApiWeb.UserControllerTest do
     test "when the user parameters are invalid", %{conn: conn, user: user} do
       user_params = %{email: "?@?", name: "?", password: nil}
 
-      conn = put(conn, ~p"/users/#{user}", user: user_params)
+      conn = put(conn, ~p"/users/#{user}", user: user_params) |> doc()
 
       assert %{"errors" => errors} = json_response(conn, 422)
 
@@ -118,7 +118,7 @@ defmodule ApiWeb.UserControllerTest do
     setup [:insert_user]
 
     test "when the user is found", %{conn: conn, user: user} do
-      conn = delete(conn, ~p"/users/#{user}")
+      conn = delete(conn, ~p"/users/#{user}") |> doc()
       assert response(conn, 204)
 
       conn = get(conn, ~p"/users/#{user}")
@@ -132,7 +132,7 @@ defmodule ApiWeb.UserControllerTest do
     setup [:insert_user]
 
     test "when the user is not found", %{conn: conn} do
-      conn = delete(conn, ~p"/users/#{@id_not_found}")
+      conn = delete(conn, ~p"/users/#{@id_not_found}") |> doc()
 
       assert %{"errors" => errors} = json_response(conn, 422)
 
