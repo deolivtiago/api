@@ -26,6 +26,11 @@ config :api, ApiWeb.Endpoint,
   pubsub_server: Api.PubSub,
   live_view: [signing_salt: "1QVdLCX0"]
 
+# Configures the Guardian
+config :api, ApiWeb.Auth.Guardian,
+  issuer: "api",
+  secret_key: "z4TbmMWsKcRxjY+1SRT4piDeFTwxcQUAS2Jff1GsURGev80Yg/A+iFHhpIvS49+I"
+
 # Configures the tzdata
 config :elixir, :time_zone_database, Tzdata.TimeZoneDatabase
 
