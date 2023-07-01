@@ -10,6 +10,13 @@ defmodule ApiWeb.Router do
   end
 
   scope "/", ApiWeb do
+    pipe_through :api
+
+    post "/signup", AuthController, :signup
+    post "/signin", AuthController, :signin
+  end
+
+  scope "/", ApiWeb do
     pipe_through [:api, :auth]
 
     resources "/users", UserController, except: [:new, :edit]
