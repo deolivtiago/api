@@ -11,10 +11,10 @@ defmodule ApiWeb.UserController do
   @doc """
   Handles request to list users.
   """
-  def index(conn, _params) do
-    users = Accounts.list_users()
-
-    render(conn, :index, users: users)
+  def index(conn, params) do
+    with {:ok, users} <- Accounts.list_users(params) do
+      render(conn, :index, users: users)
+    end
   end
 
   @doc """

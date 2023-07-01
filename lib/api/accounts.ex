@@ -11,7 +11,7 @@ defmodule Api.Accounts do
       iex> list_users()
       [%User{}, ...]
   """
-  defdelegate list_users, to: User.List, as: :call
+  defdelegate list_users(params), to: User.List, as: :call
 
   @doc """
   Gets an user

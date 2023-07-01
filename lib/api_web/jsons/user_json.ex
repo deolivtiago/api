@@ -20,7 +20,9 @@ defmodule ApiWeb.UserJSON do
     %{
       id: user.id,
       name: user.name,
-      email: user.email
+      email: user.email,
+      inserted_at: user.inserted_at,
+      updated_at: user.updated_at
     }
   end
 end
