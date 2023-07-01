@@ -17,15 +17,15 @@ defmodule ApiWeb.UserControllerTest do
     setup [:insert_user, :put_auth]
 
     test "with a list of users when there are users", %{conn: conn, user: user} do
-      %{id: id, email: email, name: name} = user
-
       conn = get(conn, ~p"/users")
 
-      assert %{"data" => [user]} = json_response(conn, :ok)
+      assert %{"data" => [user_data]} = json_response(conn, :ok)
 
-      assert user["id"] == id
-      assert user["email"] == email
-      assert user["name"] == name
+      assert user_data["id"] == user.id
+      assert user_data["email"] == user.email
+      assert user_data["name"] == user.name
+      assert user_data["inserted_at"] == DateTime.to_iso8601(user.inserted_at)
+      assert user_data["updated_at"] == DateTime.to_iso8601(user.updated_at)
     end
   end
 
@@ -39,8 +39,11 @@ defmodule ApiWeb.UserControllerTest do
 
       assert %{"data" => user_data} = json_response(conn, :created)
 
+      assert user_data["id"]
       assert user_data["email"] == user_params.email
       assert user_data["name"] == user_params.name
+      assert user_data["inserted_at"]
+      assert user_data["updated_at"]
     end
   end
 
@@ -71,6 +74,8 @@ defmodule ApiWeb.UserControllerTest do
       assert user_data["id"] == user.id
       assert user_data["email"] == user.email
       assert user_data["name"] == user.name
+      assert user_data["inserted_at"] == DateTime.to_iso8601(user.inserted_at)
+      assert user_data["updated_at"] == DateTime.to_iso8601(user.updated_at)
     end
   end
 
@@ -99,6 +104,8 @@ defmodule ApiWeb.UserControllerTest do
       assert user_data["id"] == user.id
       assert user_data["email"] == user_params.email
       assert user_data["name"] == user_params.name
+      assert user_data["inserted_at"] == DateTime.to_iso8601(user.inserted_at)
+      assert user_data["updated_at"]
     end
   end
 

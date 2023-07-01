@@ -14,6 +14,8 @@ defmodule ApiWeb.UserJSONTest do
       assert user_data.id == user.id
       assert user_data.name == user.name
       assert user_data.email == user.email
+      assert user_data.inserted_at == user.inserted_at
+      assert user_data.updated_at == user.updated_at
     end
 
     test "with a single user", %{user: user} do
@@ -22,6 +24,8 @@ defmodule ApiWeb.UserJSONTest do
       assert user_data.id == user.id
       assert user_data.name == user.name
       assert user_data.email == user.email
+      assert user_data.inserted_at == user.inserted_at
+      assert user_data.updated_at == user.updated_at
     end
   end
 
