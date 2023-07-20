@@ -6,6 +6,7 @@ defmodule Api.Accounts.User do
 
   import Ecto.Changeset
 
+  alias __MODULE__.Token
   alias Argon2
 
   @required_attrs [:name, :email, :password]
@@ -15,6 +16,8 @@ defmodule Api.Accounts.User do
     field :email, :string
     field :password, :string, virtual: true, redact: true
     field :password_hash, :string
+
+    has_many :user_tokens, Token, foreign_key: :sub
 
     timestamps()
   end
