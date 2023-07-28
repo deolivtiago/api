@@ -8,9 +8,11 @@ defmodule ApiWeb.AuthJSON do
   @doc """
   Renders authentication.
   """
-  def show(%{auth: %{token: token} = auth}) do
-    auth
+  def show(%{auth: %{user: user, token: token}}) do
+    %{user: user}
     |> UserJSON.show()
     |> Map.update(:data, nil, &Map.new(user: &1, token: token))
   end
+
+  def show(%{auth: auth}), do: auth
 end

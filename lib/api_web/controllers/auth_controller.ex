@@ -29,4 +29,12 @@ defmodule ApiWeb.AuthController do
       render(conn, :show, auth: auth)
     end
   end
+
+  def refresh(conn, _params) do
+    [auth_header] = get_req_header(conn, "authorization")
+
+    with {:ok, auth} <- AuthHandler.refresh_user_tokens(auth_header) do
+      render(conn, :show, auth: auth)
+    end
+  end
 end

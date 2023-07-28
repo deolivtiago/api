@@ -5,7 +5,7 @@ defmodule ApiWeb.Auth.Pipeline do
     module: ApiWeb.Auth.Guardian,
     error_handler: ApiWeb.Auth.ErrorHandler
 
-  plug Guardian.Plug.VerifyHeader, claims: %{"typ" => "access"}
+  plug Guardian.Plug.VerifyHeader, claims: %{"iss" => "api"}
   plug Guardian.Plug.LoadResource, allow_blank: false
   plug Guardian.Plug.EnsureAuthenticated
 end

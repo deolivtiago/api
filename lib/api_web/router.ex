@@ -20,6 +20,7 @@ defmodule ApiWeb.Router do
     pipe_through [:api, :auth]
 
     resources "/users", UserController, except: [:new, :edit]
+    post "/refresh", AuthController, :refresh
   end
 
   # Enable Swoosh mailbox preview in development
