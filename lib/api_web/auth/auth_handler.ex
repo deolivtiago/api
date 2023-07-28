@@ -4,6 +4,7 @@ defmodule ApiWeb.Auth.AuthHandler do
   """
   alias Api.Accounts
   alias Api.Accounts.User
+  alias Api.Accounts.User.Token
   alias ApiWeb.Auth.Guardian
   alias Argon2
   alias Ecto.Changeset
@@ -18,6 +19,32 @@ defmodule ApiWeb.Auth.AuthHandler do
   end
 
   def authenticate_user(_invalid_credentials), do: user_credentials_error()
+
+  def refresh_user_tokens(auth_header) when is_binary(auth_header) do
+    token = String.replace(auth_header, ~r/(B|b)earer /, "")
+    {:ok, claims} = Guardian.decode_and_verify(token)
+
+    refresh_user_tokens(token, claims)
+  end
+
+  def refresh_user_tokens(token, %{"typ" => "refresh"}) do
+    with {:ok, {_, _}, {access, _}} <-
+           Guardian.exchange(token, "refresh", "access", ttl: {1, :hour}),
+         {:ok, {_, _}, {refresh, _}} <- Guardian.refresh(token) do
+      {:ok,
+       %{
+         token:
+           Map.new()
+           |> Map.put(:type, "Bearer")
+           |> Map.put(:access, access)
+           |> Map.put(:refresh, refresh)
+       }}
+    end
+  end
+
+  def refresh_user_tokens(token, _claims) do
+    {:error, Token.invalid_changeset(:token, token, "should be of type refresh")}
+  end
 
   defp verify_email(email) do
     case Accounts.get_user(email: email) do
@@ -46,7 +73,7 @@ defmodule ApiWeb.Auth.AuthHandler do
        user: user,
        token:
          Map.new()
-         |> Map.put(:type, "bearer")
+         |> Map.put(:type, "Bearer")
          |> put_token(:access, user)
          |> put_token(:refresh, user)
      }}
